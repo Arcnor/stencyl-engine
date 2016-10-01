@@ -47,6 +47,8 @@ import com.stencyl.models.actor.Animation;
 import com.stencyl.models.GameModel;
 
 import com.stencyl.utils.Utils;
+import com.stencyl.models.IdType.IdUtils;
+import com.stencyl.models.IdType.Identifiable;
 
 import motion.Actuate;
 import motion.easing.Back;
@@ -99,7 +101,7 @@ typedef ActorAnimation = SheetAnimation;
 typedef ActorAnimation = BitmapAnimation;
 #end
 
-class Actor extends Sprite 
+class Actor extends Sprite implements Identifiable
 {	
 	//*-----------------------------------------------
 	//* Globals
@@ -115,7 +117,7 @@ class Actor extends Sprite
 	//Used for recycled actors to tell them apart
 	public var createTime:Float;
 	
-	public var ID:Int;
+	public var ID:IdType;
 	public var groupID:Int;
 	public var layerID:Int;
 	public var typeID:Int;
@@ -309,7 +311,7 @@ class Actor extends Sprite
 	public function new
 	(
 		engine:Engine, 
-		ID:Int,
+		ID:IdType,
 		groupID:Int,
 		x:Float=0, 
 		y:Float=0, 
@@ -2202,7 +2204,7 @@ class Actor extends Sprite
 	//* Properties
 	//*-----------------------------------------------
 	
-	public function getID():Int
+	public function getID():IdType
 	{
 		return ID;
 	}
@@ -4923,7 +4925,7 @@ class Actor extends Sprite
 		if(xDir != 0)
 		{
 			//If tile, have to use travel direction
-			if (a.ID == Utils.INTEGER_MAX)
+			if (a.ID == IdUtils.TILE_ID)
 			{
 				info.thisFromLeft = xDir < 0;
 				info.thisFromRight = xDir > 0;
@@ -4944,7 +4946,7 @@ class Actor extends Sprite
 		if(yDir != 0)
 		{
 			//If tile, have to use travel direction
-			if (a.ID == Utils.INTEGER_MAX)
+			if (a.ID == IdUtils.TILE_ID)
 			{
 				info.thisFromTop = yDir < 0;
 				info.thisFromBottom = yDir > 0;
@@ -4964,7 +4966,7 @@ class Actor extends Sprite
 		
 		//TODO
 		info.thisCollidedWithActor = true;
-		info.thisCollidedWithTile = a.ID == Utils.INTEGER_MAX;
+		info.thisCollidedWithTile = a.ID == IdUtils.TILE_ID;
 		
 		if(info != null)
 		{
@@ -4979,7 +4981,7 @@ class Actor extends Sprite
 		info.thisCollidedWithTerrain = false;
 		
 		info.otherCollidedWithActor = true;
-		info.otherCollidedWithTile = a.ID == Utils.INTEGER_MAX;
+		info.otherCollidedWithTile = a.ID == IdUtils.TILE_ID;
 		
 		if(info != null)
 		{

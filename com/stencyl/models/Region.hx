@@ -4,6 +4,8 @@ import com.stencyl.models.Actor;
 import com.stencyl.models.collision.Hitbox;
 import com.stencyl.utils.Utils;
 
+import com.stencyl.models.IdType.IdUtils;
+
 import box2D.collision.B2AABB;
 import box2D.common.math.B2Transform;
 import box2D.dynamics.B2Body;
@@ -17,12 +19,10 @@ import openfl.geom.Rectangle;
 
 class Region extends Actor
 {
-	public inline static var UNSET_ID = -1;
-
 	public var isCircle:Bool;
 	
 	///All Hash sets of Integers
-	private var containedActors:Map<Int,Int>;
+	private var containedActors:Map<IdType,IdType>;
 
 	private var copy:B2Shape;
 	
@@ -43,7 +43,7 @@ class Region extends Actor
 
 	public function new(game:Engine, x:Float, y:Float, shapes:Array<B2Shape>, simpleBounds:Rectangle = null)
 	{
-		super(game, UNSET_ID, -2, x, y, game.getTopLayer(), Engine.NO_PHYSICS ? simpleBounds.width : 1, Engine.NO_PHYSICS ? simpleBounds.height : 1, 
+		super(game, IdUtils.INVALID_ID, -2, x, y, game.getTopLayer(), Engine.NO_PHYSICS ? simpleBounds.width : 1, Engine.NO_PHYSICS ? simpleBounds.height : 1,
 		      null, null, null, null, 
 		      false, false, false, false, 
 		      Engine.NO_PHYSICS ? null : shapes[0],
@@ -60,7 +60,7 @@ class Region extends Actor
 		this.simpleBounds = simpleBounds;
 		copy = shapes[0];
 		
-		containedActors = new Map<Int,Int>();
+		containedActors = new Map<IdType,IdType>();
 		whenActorEntersListeners = new Array<Dynamic>();
 		whenActorExitsListeners = new Array<Dynamic>();
 		
@@ -156,7 +156,7 @@ class Region extends Actor
 		}
 	}
 	
-	public function getContainedActors():Map<Int,Int>
+	public function getContainedActors():Map<IdType,IdType>
 	{
 		return containedActors;
 	}
@@ -168,7 +168,7 @@ class Region extends Actor
 			return;	
 		}
 		
-		if(actor.ID != -1 && !containedActors.exists(actor.ID))
+		if(actor.ID != IdUtils.INVALID_ID && !containedActors.exists(actor.ID))
 		{
 			containedActors.set(actor.ID, actor.ID);
 			
@@ -190,13 +190,13 @@ class Region extends Actor
 	{
 		if(actor == null)
 		{
-			return;	
+			return;
 		}
 		
-		if(actor.ID != -1)
+		if(actor.ID != IdUtils.INVALID_ID)
 		{
 			var index = Utils.indexOf(justRemoved, actor);
-			
+
 			if(index == -1)
 			{
 				containedActors.remove(actor.ID);

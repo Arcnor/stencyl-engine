@@ -10,12 +10,12 @@ class TerrainDef
 	public var shape:B2Shape;
 	public var shapes:Array<B2Shape>;
 	
-	public var ID:Int;
+	public var ID:IdType;
 	public var name:String;
 	public var groupID:Int;
 	public var fillColor:Int;
 	
-	public function new(shapes:Array<B2Shape>, ID:Int, name:String, x:Float, y:Float, groupID:Int=0, fillColor:Int=0)
+	public function new(shapes:Array<B2Shape>, ID:IdType, name:String, x:Float, y:Float, groupID:Int=0, fillColor:Int=0)
 	{
 		this.x = x;
 		this.y = y;

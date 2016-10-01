@@ -17,6 +17,7 @@ import com.stencyl.behavior.Script;
 
 import com.stencyl.models.IdType;
 import com.stencyl.models.IdType.IdUtils;
+import com.stencyl.models.IdType.IdHashTable;
 
 import openfl.geom.Point;
 import openfl.geom.Rectangle;
@@ -235,8 +236,8 @@ class Engine
 	public var tasks:Array<TimedTask>;
 	
 	//Scene-Specific
-	public var regions:IntHashTable<Region>;
-	public var terrainRegions:Map<Int,Terrain>;
+	public var regions:IdHashTable<Region>;
+	public var terrainRegions:Map<IdType,Terrain>;
 	public var joints:Map<Int,B2Joint>;
 	
 	public static var movieClip:MovieClip;
@@ -267,13 +268,13 @@ class Engine
 	public var groups:Map<Int,Group>;
 	public var reverseGroups:Map<String,Group>;
 	
-	public var allActors:IntHashTable<Actor>;
-	public var nextID:Int;
+	public var allActors:IdHashTable<Actor>;
+	public var nextID:IdType;
 	
 	//Used to be called actorsToRender
 	public var actorsPerLayer:Map<Int,DisplayObjectContainer>;
 	
-	public var hudActors:IntHashTable<Actor>;
+	public var hudActors:IdHashTable<Actor>;
 	
 	//HashMap<Integer, HashSet<Actor>>
 	public var actorsOfType:Map<Int,Array<Actor>>;
@@ -364,7 +365,7 @@ class Engine
 	private var mx:Float;
 	private var my:Float;
 
-	private var collisionPairs:IntHashTable<Map<Int,Bool>>;
+	private var collisionPairs:IdHashTable<Map<IdType,Bool>>;
 	private var disableCollisionList:Array<Actor>;
 
 	public var keyPollOccurred:Bool = false;
@@ -810,7 +811,7 @@ class Engine
 	
 	public function loadScene(sceneID:IdType)
 	{
-		collisionPairs = new IntHashTable<Map<Int,Bool>>(32);
+		collisionPairs = new IdHashTable<Map<IdType,Bool>>(32);
 		
 		//---
 		
@@ -918,21 +919,21 @@ class Engine
 		disableCollisionList = new Array<Actor>();
 		actorsOfType = new Map<Int,Array<Actor>>();
 		recycledActorsOfType = new Map<Int,Array<Actor>>();
-		
-		regions = new IntHashTable<Region>(32);
+
+		regions = new IdHashTable<Region>(32);
 		regions.reuseIterator = true;
-		
-		terrainRegions = new Map<Int,Terrain>();
+
+		terrainRegions = new Map<IdType,Terrain>();
 		joints = new Map<Int,B2Joint>();
 		
 		dynamicTiles = new Map<String,Actor>();
 		animatedTiles = new Array<Tile>();
-		hudActors = new IntHashTable<Actor>(64);
+		hudActors = new IdHashTable<Actor>(64);
 		hudActors.reuseIterator = true;
-		allActors = new IntHashTable<Actor>(256); 
+		allActors = new IdHashTable<Actor>(256);
 		allActors.reuseIterator = true;
 		actorsPerLayer = new Map<Int,DisplayObjectContainer>();
-		nextID = 0;
+		nextID = IdUtils.INVALID_ID;
 		
 		//Events
 		whenKeyPressedListeners = new Map<String, Dynamic>();
@@ -1210,7 +1211,7 @@ class Engine
 	
 	private function loadCamera()
 	{
-		camera = new Actor(this, -1, GameModel.DOODAD_ID, 0, 0, getTopLayer(), 2, 2, null, null, null, null, true, false, true, false, null, 0, true, false);
+		camera = new Actor(this, IdUtils.INVALID_ID, GameModel.DOODAD_ID, 0, 0, getTopLayer(), 2, 2, null, null, null, null, true, false, true, false, null, 0, true, false);
 		camera.name = "Camera";
 		camera.isCamera = true;
 		cameraX = 0;
@@ -1219,7 +1220,7 @@ class Engine
 	
 	private function loadRegions()
 	{					
-		regions = new IntHashTable<Region>(32);
+		regions = new IdHashTable<Region>(32);
 		regions.reuseIterator = true;
 
 		for(r in scene.regions)
@@ -1241,7 +1242,7 @@ class Engine
 	
 	private function loadTerrainRegions()
 	{						
-		terrainRegions = new Map<Int,Terrain>();
+		terrainRegions = new Map<IdType,Terrain>();
 		
 		if(NO_PHYSICS)
 		{
@@ -1300,7 +1301,7 @@ class Engine
 				one = getActor(a1).body;
 				two = null;
 				
-				if(a2 == -1)
+				if(a2 == IdUtils.INVALID_ID)
 				{
 					two = world.m_groundBody;
 				}
@@ -1338,7 +1339,7 @@ class Engine
 				one = getActor(a1).body;
 				two = null;
 				
-				if(a2 == -1)
+				if(a2 == IdUtils.INVALID_ID)
 				{
 					two = world.m_groundBody;
 				}
@@ -1408,7 +1409,7 @@ class Engine
 				a = new Actor
 				(
 					this, 
-					Utils.INTEGER_MAX,
+					IdUtils.TILE_ID,
 					GameModel.TERRAIN_ID,
 					wireframe.x, 
 					wireframe.y, 
@@ -1898,18 +1899,13 @@ class Engine
 		//---
 		
 		//Use the next available ID
-		if(ai.elementID == Utils.INTEGER_MAX)
+		if(ai.elementID == IdUtils.INVALID_ID)
 		{
-			nextID++;
 			a.ID = nextID;
-			allActors.set(a.ID, a);
 		}
-		
-		else
-		{
-			allActors.set(a.ID, a);
-			nextID = Std.int(Math.max(a.ID, nextID));
-		}
+
+		nextID = IdUtils.nextId(allActors);
+		allActors.set(a.ID, a);
 
 		a.internalUpdate(0, false);
 		a.updateDrawingMatrix();
@@ -2257,7 +2253,7 @@ class Engine
 		
 		var ai:ActorInstance = new ActorInstance
 		(
-			Utils.INTEGER_MAX,
+			IdUtils.INVALID_ID,
 			Std.int(x),
 			Std.int(y),
 			1,
@@ -2763,12 +2759,12 @@ class Engine
 		{
 			if(!collisionPairs.hasKey(a.ID))
 			{
-				collisionPairs.set(a.ID, new Map<Int,Bool>());
+				collisionPairs.set(a.ID, new Map<IdType,Bool>());
 			}
 			
 			if(!collisionPairs.hasKey(event.otherActor.ID))
 			{
-				collisionPairs.set(event.otherActor.ID, new Map<Int,Bool>());
+				collisionPairs.set(event.otherActor.ID, new Map<IdType,Bool>());
 			}
 			
 			if(collisionPairs.get(a.ID).exists(event.otherActor.ID) || collisionPairs.get(event.otherActor.ID).exists(a.ID))
@@ -3206,7 +3202,7 @@ class Engine
 	//* Actors
 	//*-----------------------------------------------
 	
-	public function getActor(ID:Int):Actor
+	public function getActor(ID:IdType):Actor
 	{
 		return allActors.get(ID);
 	}
@@ -3837,7 +3833,7 @@ class Engine
 	
 	public function addRegion(r:Region)
 	{
-		if(r.ID == Region.UNSET_ID)
+		if(r.ID == IdUtils.INVALID_ID)
 			r.ID = nextRegionID();
 		regions.set(r.ID, r);
 		
@@ -3847,9 +3843,9 @@ class Engine
 		}
 	}
 	
-	public function removeRegion(ID:Int)
+	public function removeRegion(ID:IdType)
 	{
-		var r = getRegion(ID);	
+		var r = getRegion(ID);
 		regions.clr(r.ID);
 		r.destroy();
 		
@@ -3859,31 +3855,19 @@ class Engine
 		}
 	}
 	
-	public function getRegion(ID:Int):Region
+	public function getRegion(ID:IdType):Region
 	{
 		return regions.get(ID);
 	}
 	
-	public function getRegions():IntHashTable<Region>
+	public function getRegions():IdHashTable<Region>
 	{
 		return regions;
 	}
 	
-	public function nextRegionID():Int
+	public function nextRegionID():IdType
 	{
-		var ID = -1;
-		
-		for(r in regions)
-		{
-			if(r == null) 
-			{
-				continue;
-			}
-				
-			ID = Std.int(Math.max(ID, r.ID));
-		}
-		
-		return ID + 1;
+		return IdUtils.nextId(regions);
 	}
 	
 	public function isInRegion(a:Actor, r:Region):Bool
@@ -3947,39 +3931,31 @@ class Engine
 	
 	public function addTerrainRegion(r:Terrain)
 	{
-		if(r.ID == Terrain.UNSET_ID)
+		if(r.ID == IdUtils.INVALID_ID)
 			r.ID = nextTerrainRegionID();
 		terrainRegions.set(r.ID, r);
 	}
 	
-	public function removeTerrainRegion(ID:Int)
+	public function removeTerrainRegion(ID:IdType)
 	{
 		var t = getTerrainRegion(ID);
 		terrainRegions.remove(ID);
 		t.destroy();
 	}
 	
-	public function getTerrainRegion(ID:Int):Terrain
+	public function getTerrainRegion(ID:IdType):Terrain
 	{
 		return terrainRegions.get(ID);
 	}
 	
-	public function getTerrainRegions():Map<Int,Terrain>
+	public function getTerrainRegions():Map<IdType,Terrain>
 	{
 		return terrainRegions;
 	}
 	
-	public function nextTerrainRegionID():Int
+	public function nextTerrainRegionID():IdType
 	{
-		var ID = -1;
-		
-		for(r in terrainRegions)
-		{
-			if(r == null) continue;
-			ID = Std.int(Math.max(ID, r.ID));
-		}
-		
-		return ID + 1;
+		return IdUtils.nextId(terrainRegions);
 	}
 	
 	//*-----------------------------------------------

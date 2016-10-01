@@ -10,12 +10,12 @@ class RegionDef
 	public var shape:B2Shape;
 	public var shapes:Array<B2Shape>;
 	
-	public var ID:Int;
+	public var ID:IdType;
 	public var name:String;
 	public var shapeID:Int;
 	public var simpleBounds:Rectangle;
 	
-	public function new(shapes:Array<B2Shape>, ID:Int, name:String, x:Float, y:Float, shapeID:Int=0, simpleBounds:Rectangle = null)
+	public function new(shapes:Array<B2Shape>, ID:IdType, name:String, x:Float, y:Float, shapeID:Int=0, simpleBounds:Rectangle = null)
 	{
 		this.x = x;
 		this.y = y;
