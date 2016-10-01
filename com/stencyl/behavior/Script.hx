@@ -970,12 +970,12 @@ class Script
 		return regions;
 	}
 	
-	public static function getRegion(regionID:Int):Region
+	public static function getRegion(regionID:IdType):Region
 	{
 		return engine.getRegion(regionID);
 	}
 	
-	public static function removeRegion(regionID:Int)
+	public static function removeRegion(regionID:IdType)
 	{
 		engine.removeRegion(regionID);
 	}
@@ -1831,7 +1831,7 @@ class Script
 	/**
 	* Returns an actor in the scene by ID
 	*/
-	public static function getActor(actorID:Int):Actor
+	public static function getActor(actorID:IdType):Actor
 	{
 		return engine.getActor(actorID);
 	}
@@ -3380,7 +3380,7 @@ class Script
 		var a:Actor = new Actor
 		(
 			engine, 
-			Utils.INTEGER_MAX,
+			IdUtils.TILE_ID,
 			GameModel.TERRAIN_ID,
 			x, 
 			y, 

@@ -1,7 +1,8 @@
 package com.stencyl.behavior;
 
-import openfl.display.Graphics;
 import haxe.ds.StringMap;
+
+import com.stencyl.models.IdType;
 
 class Behavior 
 {	
@@ -128,7 +129,7 @@ class Behavior
 				
 				if(a.type == "actor" || a.type == "joint" || a.type == "region")
 				{
-					var eID:Int = Std.parseInt("" + a.getRealValue());
+					var eID:IdType = IdUtils.parseId("" + a.getRealValue());
 					
 					if(a.type == "actor")
 					{

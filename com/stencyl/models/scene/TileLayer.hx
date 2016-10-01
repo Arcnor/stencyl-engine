@@ -13,6 +13,8 @@ import com.stencyl.models.Scene;
 import com.stencyl.utils.Utils;
 import com.stencyl.models.collision.Grid;
 
+import com.stencyl.models.IdType.IdUtils;
+
 #if (cpp || neko)
 import openfl.display.Tilesheet;
 #end
@@ -143,7 +145,7 @@ class TileLayer extends Sprite
 		var a = new Actor
 		(
 			Engine.engine, 
-			Utils.INTEGER_MAX,
+			IdUtils.TILE_ID,
 			GameModel.TERRAIN_ID,
 			0, 
 			0, 

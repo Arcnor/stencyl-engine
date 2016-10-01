@@ -3,6 +3,8 @@ package com.stencyl.models;
 import com.stencyl.models.Actor;
 import com.stencyl.utils.Utils;
 
+import com.stencyl.models.IdType.IdUtils;
+
 import box2D.collision.B2AABB;
 import box2D.common.math.B2Transform;
 import box2D.dynamics.B2Body;
@@ -14,8 +16,6 @@ import box2D.collision.shapes.B2PolygonShape;
 
 class Terrain extends Actor
 {
-	public inline static var UNSET_ID = -1;
-	
 	public var isCircle:Bool;
 	public var fillColor:Int;
 	
@@ -29,7 +29,7 @@ class Terrain extends Actor
 	
 	public function new(game:Engine, x:Float, y:Float, shapes:Array<B2Shape>, groupID:Int, fillColor:Int = 0)
 	{
-		super(game, UNSET_ID, groupID, x, y, game.getTopLayer(), 1, 1, 
+		super(game, IdUtils.INVALID_ID, groupID, x, y, game.getTopLayer(), 1, 1,
 		      null, null, null, null, 
 		      false, true, false, false, 
 		      shapes[0]);

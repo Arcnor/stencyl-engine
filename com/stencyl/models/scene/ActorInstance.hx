@@ -6,7 +6,7 @@ import com.stencyl.models.Resource;
 
 class ActorInstance 
 {	
-	public var elementID:Int;
+	public var elementID:IdType;
 	public var x:Int;
 	public var y:Int;
 	public var scaleX:Float;
@@ -22,7 +22,7 @@ class ActorInstance
 	
 	public function new
 	(
-		elementID:Int,
+		elementID:IdType,
 		x:Int,
 		y:Int,
 		scaleX:Float,

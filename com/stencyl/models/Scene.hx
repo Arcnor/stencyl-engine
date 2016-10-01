@@ -23,6 +23,8 @@ import com.stencyl.models.collision.Mask;
 import com.stencyl.behavior.BehaviorInstance;
 import com.stencyl.graphics.BlendModes;
 
+import com.stencyl.models.IdType;
+
 import openfl.display.BlendMode;
 import openfl.geom.Point;
 import box2D.collision.shapes.B2Shape;
@@ -73,8 +75,8 @@ class Scene
 	//Box2D
 	public var wireframes:Array<Wireframe>;
 	public var joints:Map<Int,B2JointDef>;
-	public var regions:Map<Int,RegionDef>;
-	public var terrainRegions:Map<Int,TerrainDef>;
+	public var regions:Map<IdType,RegionDef>;
+	public var terrainRegions:Map<IdType,TerrainDef>;
 	
 	public var animatedTiles:Array<Tile>;
 	
@@ -170,9 +172,9 @@ class Scene
 		animatedTiles = null;
 	}
 	
-	public function readRegions(list:Iterator<Fast>):Map<Int,RegionDef>
+	public function readRegions(list:Iterator<Fast>):Map<IdType,RegionDef>
 	{
-		var map = new Map<Int,RegionDef>();
+		var map = new Map<IdType,RegionDef>();
 		
 		for(e in list)
 		{
@@ -186,7 +188,7 @@ class Scene
 	public function readRegion(e:Fast):RegionDef
 	{
 		var type = e.att.type;
-		var elementID = Std.parseInt(e.att.id);
+		var elementID = IdUtils.parseId(e.att.id);
 		var name = e.att.name;
 		var region:RegionDef;
 		
@@ -379,9 +381,9 @@ class Scene
 		shapeList.push(polyShape);
 	}
 	
-	public function readTerrainRegions(list:Iterator<Fast>):Map<Int,TerrainDef>
+	public function readTerrainRegions(list:Iterator<Fast>):Map<IdType,TerrainDef>
 	{
-		var map = new Map<Int,TerrainDef>();
+		var map = new Map<IdType,TerrainDef>();
 		
 		for(e in list)
 		{
@@ -395,7 +397,7 @@ class Scene
 	public function readTerrainRegion(e:Fast):TerrainDef
 	{
 		var type = e.att.type;
-		var elementID = Std.parseInt(e.att.id);
+		var elementID = IdUtils.parseId(e.att.id);
 		var name = e.att.name;
 		var group = Std.parseInt(e.att.group);
 		var terrainRegion:TerrainDef;
@@ -484,8 +486,8 @@ class Scene
 		var type:String = e.name;
 		var elementID = Std.parseInt(e.att.id);
 		
-		var a1 = Std.parseInt(e.att.a1);
-		var a2 = Std.parseInt(e.att.a2);
+		var a1 = IdUtils.parseId(e.att.a1);
+		var a2 = IdUtils.parseId(e.att.a2);
 		var collide = Utils.toBoolean(e.att.collide);
 		
 		if(type == "STICK_JOINT")
@@ -957,7 +959,7 @@ class Scene
 	
 	public function readActorInstance(xml:Fast):ActorInstance
 	{
-		var elementID:Int = Std.parseInt(xml.att.aid);
+		var elementID:IdType = IdUtils.parseId(xml.att.aid);
 		var x:Int = Std.parseInt(xml.att.x);
 		var y:Int = Std.parseInt(xml.att.y);
 		
