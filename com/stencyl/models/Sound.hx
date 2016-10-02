@@ -4,6 +4,8 @@ import openfl.media.SoundChannel;
 import openfl.Assets;
 import com.stencyl.behavior.Script;
 
+import com.stencyl.models.IdType.IdUtils;
+
 //TODO: don't load a sound upfront - tie to atlas (remove loading from init)
 //Provide load/unload functions (need to hack into NME to unload a sound forcefully?)
 //Make sure load/unload get calleed alongside rest of atlas stuff.
@@ -26,7 +28,7 @@ class Sound extends Resource
 
 	public function new(ID:Int, name:String, streaming:Bool, looping:Bool, panning:Float, volume:Float, ext:String) 
 	{
-		super(ID, name, -1);
+		super(ID, name, IdUtils.INVALID_ID);
 		
 		this.streaming = streaming;
 		this.looping = looping;

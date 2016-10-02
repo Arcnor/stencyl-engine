@@ -5,11 +5,11 @@ import com.stencyl.Data;
 class Resource 
 {
 	public var ID:Int;
-	public var atlasID:Int;
+	public var atlasID:IdType;
 	public var name:String;
 	public var sID:String;
 	
-	public function new(ID:Int, name:String, atlasID:Int) 
+	public function new(ID:Int, name:String, atlasID:IdType)
 	{
 		this.ID = ID;
 		this.atlasID = atlasID;

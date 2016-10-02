@@ -5,14 +5,16 @@ import openfl.geom.Matrix;
 import openfl.display.GradientType;
 import openfl.display.SpreadMethod;
 
-class GradientBackground extends Resource implements Background 
+import com.stencyl.models.IdType.IdUtils;
+
+class GradientBackground extends Resource implements Background
 {	
 	private var topColor:UInt;
 	private var bottomColor:UInt;
 
 	public function new(topColor:UInt, bottomColor:UInt) 
 	{
-		super(0, "Gradient Background", -1);
+		super(0, "Gradient Background", IdUtils.INVALID_ID);
 		
 		this.topColor = topColor;
 		this.bottomColor = bottomColor;

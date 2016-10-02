@@ -16,7 +16,7 @@ class Font extends Resource
 	public var letterSpacing:Int;
 	public var isDefault:Bool;
 
-	public function new(ID:Int, atlasID:Int, name:String, isDefault:Bool)
+	public function new(ID:Int, atlasID:IdType, name:String, isDefault:Bool)
 	{	
 		super(ID, name, atlasID);
 		

@@ -8,6 +8,8 @@ import com.stencyl.models.Resource;
 import com.stencyl.models.actor.Sprite;
 import com.stencyl.models.actor.Animation;
 
+import com.stencyl.models.IdType;
+
 import box2D.common.math.B2Vec2;
 import box2D.dynamics.B2FixtureDef;
 import box2D.collision.B2AABB;
@@ -28,7 +30,7 @@ class SpriteReader implements AbstractReader
 		return type == "sprite";
 	}
 	
-	public function read(ID:Int, atlasID:Int, type:String, name:String, xml:Fast):Resource
+	public function read(ID:Int, atlasID:IdType, type:String, name:String, xml:Fast):Resource
 	{
 		//trace("Reading Sprite (" + ID + ") - " + name);
 		

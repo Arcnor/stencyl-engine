@@ -2,6 +2,7 @@ package com.stencyl.io;
 
 import haxe.xml.Fast;
 import com.stencyl.utils.Utils;
+import com.stencyl.models.IdType;
 
 import com.stencyl.models.Resource;
 import com.stencyl.models.Sound;
@@ -17,7 +18,7 @@ class SoundReader implements AbstractReader
 		return type == "sound" || type == "music";
 	}
 	
-	public function read(ID:Int, atlasID:Int, type:String, name:String, xml:Fast):Resource
+	public function read(ID:Int, atlasID:IdType, type:String, name:String, xml:Fast):Resource
 	{
 		//trace("Reading Sound (" + ID + ") - " + name);
 

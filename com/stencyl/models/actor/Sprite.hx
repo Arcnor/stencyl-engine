@@ -9,7 +9,7 @@ class Sprite extends Resource
 	public var defaultAnimation:Int;
 	public var animations:Map<Int, Animation>;
 	
-	public function new(ID:Int, atlasID:Int, name:String, width:Int, height:Int, defaultAnimation:Int)
+	public function new(ID:Int, atlasID:IdType, name:String, width:Int, height:Int, defaultAnimation:Int)
 	{
 		super(ID, name, atlasID);
 		

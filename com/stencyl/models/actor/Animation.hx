@@ -48,7 +48,7 @@ class Animation
 		frameCount:Int,
 		framesAcross:Int, 
 		framesDown:Int,
-		atlasID:Int
+		atlasID:IdType
 	)
 	{
 		this.animID = animID;
