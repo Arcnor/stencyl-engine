@@ -4032,21 +4032,21 @@ class Script
 	
 	//Like the prior implementation, this is a HINT to the engine to load a new atlas UPON CHANGING SCENES
 	//Does not happen immediately.
-	public static function loadAtlas(atlasID:Int)
+	public static function loadAtlas(atlasID:IdType)
 	{
 		//#if mobile
 		engine.atlasesToLoad.set(atlasID, atlasID);
 		//#end
 	}
 	
-	public static function unloadAtlas(atlasID:Int)
+	public static function unloadAtlas(atlasID:IdType)
 	{
 		//#if mobile
 		engine.atlasesToUnload.set(atlasID, atlasID);
 		//#end
 	}
 	
-	public static function atlasIsLoaded(atlasID:Int):Bool
+	public static function atlasIsLoaded(atlasID:IdType):Bool
 	{
 		#if flash
 		return true;

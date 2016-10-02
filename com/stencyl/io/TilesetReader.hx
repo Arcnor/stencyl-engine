@@ -1,7 +1,8 @@
 package com.stencyl.io;
 
 import haxe.xml.Fast;
-import com.stencyl.utils.Utils;
+
+import com.stencyl.models.IdType;
 
 import com.stencyl.models.GameModel;
 import com.stencyl.models.Resource;
@@ -20,7 +21,7 @@ class TilesetReader implements AbstractReader
 		return type == "tileset";
 	}
 	
-	public function read(ID:Int, atlasID:Int, type:String, name:String, xml:Fast):Resource
+	public function read(ID:Int, atlasID:IdType, type:String, name:String, xml:Fast):Resource
 	{
 		//trace("Reading Tileset (" + ID + ") - " + name);
 

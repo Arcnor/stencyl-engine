@@ -18,7 +18,7 @@ class ActorType extends Resource
 	public function new
 	(
 		ID:Int, 
-		atlasID:Int,
+		atlasID:IdType,
 		name:String, 
 		groupID:Int, 
 		spriteID:Int, 

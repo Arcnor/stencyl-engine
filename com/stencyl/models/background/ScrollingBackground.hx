@@ -11,7 +11,7 @@ class ScrollingBackground extends ImageBackground implements Background
 	public function new
 	(
 		ID:Int,
-		atlasID:Int,
+		atlasID:IdType,
 		name:String,
 		durations:Array<Int>,
 		parallaxX:Float,

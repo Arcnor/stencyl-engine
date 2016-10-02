@@ -22,6 +22,8 @@ import com.stencyl.graphics.fonts.Label;
 import com.stencyl.graphics.fonts.BitmapFont;
 import com.stencyl.graphics.fonts.DefaultFontGenerator;
 
+import com.stencyl.models.IdType.IdUtils;
+
 class G 
 {
 	private var defaultFont:Font;
@@ -94,8 +96,8 @@ class G
 		pointCounter = 0;
 		firstX = 0;
 		firstY = 0;
-		
-		font = defaultFont = new Font(-1, 0, "", true); 
+
+		font = defaultFont = new Font(-1, IdUtils.INVALID_ID, "", true); // FIXME: `atlasID` should not be `INVALID_ID` but `first atlas` or similar
 		
 		drawData = [];
 		

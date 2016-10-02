@@ -2,6 +2,8 @@ package com.stencyl.models.background;
 
 import openfl.display.Graphics;
 
+import com.stencyl.models.IdType.IdUtils;
+
 class ColorBackground extends Resource implements Background 
 {	
 	public var bgColor:Int;
@@ -11,7 +13,7 @@ class ColorBackground extends Resource implements Background
 
 	public function new(bgColor:Int) 
 	{	
-		super(0, "Color Background", -1);
+		super(0, "Color Background", IdUtils.INVALID_ID);
 		
 		this.bgColor = bgColor;
 		

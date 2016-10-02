@@ -11,6 +11,8 @@ import com.stencyl.models.scene.ScrollingBitmap;
 import com.stencyl.models.background.ImageBackground;
 import com.stencyl.models.background.ScrollingBackground;
 
+import com.stencyl.models.IdType.IdUtils;
+
 //TODO:
 //Botched implementation of drawTiles
 //Wrong because tilesheet only contains one frame at a time (not ideal)
@@ -120,7 +122,7 @@ class BackgroundLayer extends RegularLayer
 
 	public function loadFromImg(img:BitmapData, tiled:Bool)
 	{
-		model = new ScrollingBackground(-1, -1, "", [100], 0, 0, tiled, 0, 0);
+		model = new ScrollingBackground(-1, IdUtils.INVALID_ID, "", [100], 0, 0, tiled, 0, 0);
 		model.img = img;
 		model.frames = [img];
 

@@ -28,7 +28,7 @@ class Tileset extends Resource
 	public var sheetMap:Map<Int,Int>;
 	#end
 	
-	public function new(ID:Int, atlasID:Int, name:String, framesAcross:Int, framesDown:Int, tileWidth:Int, tileHeight:Int, tiles:Array<Tile>)
+	public function new(ID:Int, atlasID:IdType, name:String, framesAcross:Int, framesDown:Int, tileWidth:Int, tileHeight:Int, tiles:Array<Tile>)
 	{
 		super(ID, name, atlasID);
 		

@@ -37,7 +37,7 @@ class GameModel
 	public var collisionGroups:Array<CollisionGroupDef>;
 	public var gameAttributes:Map<String,Dynamic>;
 	public var shapes:Map<Int,B2PolygonShape>;
-	public var atlases:Map<Int,Atlas>;
+	public var atlases:Map<IdType,Atlas>;
 	public var scenes:Map<IdType,Scene>;
 	public var autotileFormats:Map<Int, AutotileFormat>;
 	
@@ -211,13 +211,13 @@ class GameModel
 		return map;
 	}
 	
-	public function readAtlases(list:Iterator<Fast>):Map<Int,Atlas>
+	public function readAtlases(list:Iterator<Fast>):Map<IdType,Atlas>
 	{
-		var map:Map<Int,Atlas> = new Map<Int,Atlas>();
+		var map = new Map<IdType,Atlas>();
 		
 		for(e in list)
 		{
-			var ID = Std.parseInt(e.att.id);
+			var ID = IdUtils.parseId(e.att.id);
 			var name = e.att.name;
 			var mems = e.att.members.split(",");
 			var allScenes = e.has.allScenes ?

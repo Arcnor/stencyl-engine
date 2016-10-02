@@ -3,6 +3,7 @@ package com.stencyl.io;
 import haxe.xml.Fast;
 import com.stencyl.models.Font;
 import com.stencyl.models.Resource;
+import com.stencyl.models.IdType;
 
 class FontReader implements AbstractReader
 {
@@ -15,7 +16,7 @@ class FontReader implements AbstractReader
 		return type == "font";
 	}
 	
-	public function read(ID:Int, atlasID:Int, type:String, name:String, xml:Fast):Resource
+	public function read(ID:Int, atlasID:IdType, type:String, name:String, xml:Fast):Resource
 	{
 		//trace("Reading Font (" + ID + ") - " + name);
 		

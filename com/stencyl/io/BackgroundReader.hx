@@ -3,6 +3,8 @@ package com.stencyl.io;
 import haxe.xml.Fast;
 import com.stencyl.utils.Utils;
 
+import com.stencyl.models.IdType;
+
 import com.stencyl.models.Resource;
 import com.stencyl.models.background.ColorBackground;
 import com.stencyl.models.background.GradientBackground;
@@ -20,7 +22,7 @@ class BackgroundReader implements AbstractReader
 		return type == "background";
 	}
 	
-	public function read(ID:Int, atlasID:Int, type:String, name:String, xml:Fast):Resource
+	public function read(ID:Int, atlasID:IdType, type:String, name:String, xml:Fast):Resource
 	{
 		//trace("Reading Background (" + ID + ") - " + name);
 

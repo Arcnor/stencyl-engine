@@ -68,7 +68,7 @@ class Scene
 	
 	public var actors:Map<Int,ActorInstance>;
 	public var behaviorValues:Map<String,BehaviorInstance>;
-	public var atlases:Array<Int>;
+	public var atlases:Array<IdType>;
 
 	public var retainsAtlases:Bool;
 
@@ -152,7 +152,7 @@ class Scene
 		if(!retainsAtlases)
 			atlases = readAtlases(xml.node.atlases);
 		else
-			atlases = new Array<Int>();
+			atlases = new Array<IdType>();
 	}
 	
 	public function unload()
@@ -570,7 +570,7 @@ class Scene
 		for(e in list)
 		{
 			if(e.name == "color-bg" || e.name == "grad-bg")
-				colorBackground = cast(new BackgroundReader().read(0, 0, e.name, "", e), Background);
+				colorBackground = cast(new BackgroundReader().read(0, IdUtils.INVALID_ID, e.name, "", e), Background);
 			else
 			{
 				var ID:Int = Std.parseInt(e.att.id);
@@ -850,9 +850,9 @@ class Scene
 	}
 	#end
 
-	public function readAtlases(e:Fast):Array<Int>
+	public function readAtlases(e:Fast):Array<IdType>
 	{
-		var members = new Array<Int>();
+		var members = new Array<IdType>();
 		var mems = e.att.members.split(",");
 
 		if(e.att.members != "")
@@ -862,11 +862,11 @@ class Scene
 				if(n == "")
 					continue;
 
-				var atlasID:Int = Std.parseInt(n);
+				var atlasID = IdUtils.parseId(n);
 				if(GameModel.get().atlases.get(atlasID).allScenes)
 					continue;
 
-				members.push(Std.parseInt(n));
+				members.push(atlasID);
 			}
 		}
 

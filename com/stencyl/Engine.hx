@@ -315,9 +315,9 @@ class Engine
 
 	public var tileUpdated:Bool;
 	
-	public var loadedAtlases:Map<Int,Int>;
-	public var atlasesToLoad:Map<Int,Int>;
-	public var atlasesToUnload:Map<Int,Int>;
+	public var loadedAtlases:Map<IdType,IdType>;
+	public var atlasesToLoad:Map<IdType,IdType>;
+	public var atlasesToUnload:Map<IdType,IdType>;
 	
 	
 	//*-----------------------------------------------
@@ -631,9 +631,9 @@ class Engine
 	
 	public function begin(initSceneID:IdType)
 	{
-		loadedAtlases = new Map<Int,Int>();
-		atlasesToLoad = new Map<Int,Int>();
-		atlasesToUnload = new Map<Int,Int>();
+		loadedAtlases = new Map<IdType,IdType>();
+		atlasesToLoad = new Map<IdType,IdType>();
+		atlasesToUnload = new Map<IdType,IdType>();
 
 		Input.enable();
 		Input.define(INTERNAL_SHIFT, [Key.SHIFT]);
@@ -839,7 +839,7 @@ class Engine
 		#if(!flash)
 		{
 			//figure out which atlases we want for this scene
-			var desiredAtlasList = new Map<Int,Int>();
+			var desiredAtlasList = new Map<IdType,IdType>();
 
 			if(scene.retainsAtlases)
 			{
@@ -890,8 +890,8 @@ class Engine
 				}
 			}
 			
-			atlasesToLoad = new Map<Int,Int>();
-			atlasesToUnload = new Map<Int,Int>();
+			atlasesToLoad = new Map<IdType,IdType>();
+			atlasesToUnload = new Map<IdType,IdType>();
 		}
 		#end
 		

@@ -253,11 +253,11 @@ class Data
 			updatePreloader(65 + Std.int(increment * i));
 			#end
 			
-			var atlasID = 0;
+			var atlasID = IdUtils.INVALID_ID;   // FIXME: `atlasID` should not be `INVALID_ID` but `first atlas` or similar
 			
 			if(e.has.atlasID)
 			{
-				atlasID = Std.parseInt(e.att.atlasID);
+				atlasID = IdUtils.parseId(e.att.atlasID);
 			}
 			
 			resources.set(Std.parseInt(e.att.id), readResource(Std.parseInt(e.att.id), atlasID, e.name, e.att.name, e));
@@ -268,7 +268,7 @@ class Data
 		}
 	}
 	
-	private function readResource(ID:Int, atlasID:Int, type:String, name:String, xml:Fast):Resource
+	private function readResource(ID:Int, atlasID:IdType, type:String, name:String, xml:Fast):Resource
 	{
 		for(reader in readers)
 		{
@@ -321,7 +321,7 @@ class Data
 		return resourceAssets.get(url);
 	}
 	
-	public function loadAtlas(atlasID:Int)
+	public function loadAtlas(atlasID:IdType)
 	{
 		trace("Load Atlas: " + atlasID);
 	
@@ -343,7 +343,7 @@ class Data
 		}
 	}
 	
-	public function unloadAtlas(atlasID:Int)
+	public function unloadAtlas(atlasID:IdType)
 	{
 		#if(cpp || neko)
 		trace("Unload Atlas: " + atlasID);
